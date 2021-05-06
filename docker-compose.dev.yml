@@ -31,4 +31,4 @@ services:
     volumes:
       - redis_data:/var/lib/redis
     ports:
-      - 6379:6379
+      - ${REDIS_PORT}:6379
