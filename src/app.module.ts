@@ -5,11 +5,11 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import configuration from './config/configuration';
 import { join } from 'path';
+import { MessageModule } from './message-events/message.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      isGlobal: true,
       load: [configuration],
       envFilePath: ['.env.development', '.env.production', '.env'],
     }),
@@ -19,7 +19,7 @@ import { join } from 'path';
       useFactory: (configService: ConfigService) => ({
         type: 'mysql',
         host: configService.get('database.host'),
-        port: configService.get('database.port'),
+        port: +configService.get('database.port'),
         username: configService.get('database.username'),
         password: configService.get('database.password'),
         database: configService.get('database.database'),
@@ -27,6 +27,7 @@ import { join } from 'path';
         synchronize: true,
       }),
     }),
+    MessageModule,
   ],
   controllers: [AppController],
   providers: [AppService],
