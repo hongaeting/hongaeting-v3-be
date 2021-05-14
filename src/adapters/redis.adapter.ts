@@ -7,8 +7,8 @@ export class RedisIoAdapter extends IoAdapter {
     super(app);
   }
 
-  createIOServer(port: number): any {
-    const server = super.createIOServer(port);
+  createIOServer(port: number, options?: any): any {
+    const server = super.createIOServer(port, options);
     const redisAdapter = redisIoAdapter({
       host: this.configService.get('redis.host'),
       port: +this.configService.get('redis.port'),
