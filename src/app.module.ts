@@ -7,6 +7,7 @@ import configuration from './config/configuration';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MessageModule } from './message-events/message.module';
+import { UsersModule } from './entities/users/users.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { MessageModule } from './message-events/message.module';
       }),
     }),
     MessageModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
