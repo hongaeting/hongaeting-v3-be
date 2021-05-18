@@ -9,14 +9,14 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
-import { CreateUserDto } from '../dto/create-user.dto';
-import { UpdateUserDto } from '../dto/update-User.Dto';
+import { CreateUserDto } from './interface/create-user.dto';
+import { UpdateUserDto } from './interface/update-User.Dto';
 import { User } from './user.entity';
 import { UsersService } from './users.service';
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) { }
+  constructor(private readonly usersService: UsersService) {}
 
   @Post()
   async createUser(@Body() createUserDto: CreateUserDto) {
@@ -28,30 +28,40 @@ export class UsersController {
       });
   }
 
-  @Get(':id')
-  async getOneUser(@Param('id') id: string) {
-    return this.usersService.findOne(id)
-      .then((user) => {
-        if (!user) throw new HttpException('There is no matching user', HttpStatus.BAD_REQUEST);
-
-        return user;
-      });
-  }
-
   @Get()
   getAllUsers(): Promise<User[]> {
     return this.usersService.findAll();
   }
 
+  @Get(':id')
+  async getOneUser(@Param('id') id: number) {
+    const user = await this.usersService.findOne(id);
+
+    if (!user)
+      throw new HttpException(
+        'There is no matching user',
+        HttpStatus.BAD_REQUEST,
+      );
+
+    return user;
+  }
+
   @Patch(':id')
-  async updateUser(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.usersService.updateUser(id, updateUserDto)
+  async updateUser(
+    @Param('id') id: number,
+    @Body() updateUserDto: UpdateUserDto,
+  ) {
+    return this.usersService
+      .updateUser(id, updateUserDto)
       .then((res) => {
         if (res.affected == 0) {
-          throw new HttpException('There is no matching user', HttpStatus.BAD_REQUEST)
+          throw new HttpException(
+            'There is no matching user',
+            HttpStatus.BAD_REQUEST,
+          );
         }
 
-        return 'Success update!';
+        return 'Success to update!';
       })
       .catch((e) => {
         throw new HttpException(e.message, HttpStatus.BAD_REQUEST);
@@ -59,14 +69,18 @@ export class UsersController {
   }
 
   @Delete(':id')
-  async deleteUser(@Param('id') id: string) {
-    return this.usersService.remove(id)
+  async deleteUser(@Param('id') id: number) {
+    return this.usersService
+      .deleteOne(id)
       .then((res) => {
         if (res.affected == 0) {
-          throw new HttpException('There is no matching user', HttpStatus.BAD_REQUEST);
+          throw new HttpException(
+            'There is no matching user',
+            HttpStatus.BAD_REQUEST,
+          );
         }
 
-        return 'Success delete!';
+        return 'Success to delete!';
       })
       .catch((e) => {
         throw new HttpException(e.message, HttpStatus.BAD_REQUEST);

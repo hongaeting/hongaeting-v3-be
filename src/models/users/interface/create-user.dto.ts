@@ -1,4 +1,4 @@
-import { GenderType } from '../users/user.entity';
+import { GenderType } from '../user.entity';
 
 export class CreateUserDto {
   email: string;
