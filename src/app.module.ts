@@ -7,7 +7,8 @@ import configuration from './config/configuration';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MessageModule } from './message-events/message.module';
-import { UsersModule } from './entities/users/users.module';
+import { CallLogsModule } from './models/callLogs/callLogs.module';
+import { UsersModule } from './models/users/users.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { UsersModule } from './entities/users/users.module';
     }),
     MessageModule,
     UsersModule,
+    CallLogsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
