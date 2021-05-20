@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+
 import { CallLog } from './callLog.entity';
 import { CallLogsService } from './callLogs.service';
 import { CallLogsController } from './callLogs.controller';
@@ -9,4 +10,4 @@ import { CallLogsController } from './callLogs.controller';
   providers: [CallLogsService],
   controllers: [CallLogsController],
 })
-export class CallLogsModule {}
+export class CallLogsModule { }

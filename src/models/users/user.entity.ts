@@ -1,4 +1,5 @@
 import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+
 import { CallLog } from '../callLogs/callLog.entity';
 
 export enum GenderType {

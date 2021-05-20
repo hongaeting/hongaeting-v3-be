@@ -9,14 +9,15 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
-import { CreateUserDto } from './interface/create-user.dto';
-import { UpdateUserDto } from './interface/update-User.Dto';
+
 import { User } from './user.entity';
 import { UsersService } from './users.service';
+import { CreateUserDto } from './interface/create-user.dto';
+import { UpdateUserDto } from './interface/update-User.Dto';
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(private readonly usersService: UsersService) { }
 
   @Post()
   async createUser(@Body() createUserDto: CreateUserDto) {

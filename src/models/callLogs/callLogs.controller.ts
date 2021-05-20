@@ -9,14 +9,14 @@ import {
   HttpException,
   HttpStatus,
 } from '@nestjs/common';
+
 import { CallLogsService } from './callLogs.service';
 import { CreateCallLogDto } from './interface/create-callLog.dto';
 import { UpdateCallLogDto } from './interface/update-callLog.dto';
-import { CallLog } from './callLog.entity';
 
 @Controller('callLogs')
 export class CallLogsController {
-  constructor(private readonly callLogsService: CallLogsService) {}
+  constructor(private readonly callLogsService: CallLogsService) { }
 
   @Post()
   async createCallLog(@Body() createCallLogDto: CreateCallLogDto) {

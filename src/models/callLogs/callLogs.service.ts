@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+
 import { CallLog } from './callLog.entity';
 import { CreateCallLogDto } from './interface/create-callLog.dto';
 import { UpdateCallLogDto } from './interface/update-callLog.dto';
@@ -10,7 +11,7 @@ export class CallLogsService {
   constructor(
     @InjectRepository(CallLog)
     private callLogsRepository: Repository<CallLog>,
-  ) {}
+  ) { }
 
   createCallLog(callLog: CreateCallLogDto) {
     return this.callLogsRepository
