@@ -13,8 +13,12 @@ export class UsersService {
     private usersRepository: Repository<User>,
   ) { }
 
-  async create(userData: ICreateUser): Promise<void> {
-    await this.usersRepository.create(userData);
+  create(userData: ICreateUser) {
+    return this.usersRepository.createQueryBuilder()
+      .insert()
+      .into(User)
+      .values([{ ...userData }])
+      .execute();
   }
 
   findAll(): Promise<User[]> {
@@ -25,11 +29,11 @@ export class UsersService {
     return this.usersRepository.findOne(id);
   }
 
-  async update(id: string, userData: IUpdateUser): Promise<void> {
-    this.usersRepository.update(id, userData);
+  update(id: string, userData: IUpdateUser) {
+    return this.usersRepository.update(id, userData);
   }
 
-  async delete(id: string): Promise<void> {
-    this.usersRepository.delete(id);
+  delete(id: string) {
+    return this.usersRepository.delete(id);
   }
 }
