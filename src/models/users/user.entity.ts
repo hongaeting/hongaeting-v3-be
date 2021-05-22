@@ -25,12 +25,12 @@ export class User {
   isVerified: boolean;
 
   @OneToMany(() => CallLog, (callLog) => callLog.caller, {
-    onDelete: 'CASCADE',
+    onDelete: 'NO ACTION',
   })
-  caller: CallLog[];
+  madeCallLog: CallLog[];
 
   @OneToMany(() => CallLog, (callLog) => callLog.callee, {
-    onDelete: 'CASCADE',
+    onDelete: 'NO ACTION',
   })
-  callee: CallLog[];
+  receivedCallLog: CallLog[];
 }
