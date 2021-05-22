@@ -3,11 +3,6 @@ import { Controller, Get, Post, Patch, Delete, Body, Param } from '@nestjs/commo
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { InternalException } from 'src/util/exception/internal.exception';
-import { User } from './user.entity';
-
-const MSG_NO_USER = 'There is no user.';
-
 
 @Controller('users')
 export class UsersController {
@@ -15,22 +10,12 @@ export class UsersController {
 
   @Get(':id')
   async find(@Param('id') id: string) {
-    const user: User = await this.usersService.findOne(id);
-
-    if (!user)
-      throw new InternalException(MSG_NO_USER);
-
-    return user;
+    return await this.usersService.findOne(id);
   }
 
   @Get()
   async findAll() {
-    const users: User[] = await this.usersService.findAll();
-
-    if (users.length === 0)
-      throw new InternalException(MSG_NO_USER);
-
-    return users;
+    return await this.usersService.findAll();
   }
 
   @Post()
