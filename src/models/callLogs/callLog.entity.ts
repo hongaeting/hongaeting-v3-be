@@ -19,9 +19,9 @@ export class CallLog {
   @ManyToOne(() => User, (user) => user.id, { onDelete: 'CASCADE' })
   callee: User;
 
-  @CreateDateColumn()
-  createdAt: Date;
+  @Column()
+  startAt: Date;
 
   @Column({ default: 0 })
-  duration: number;
+  endedAt?: Date;
 }
