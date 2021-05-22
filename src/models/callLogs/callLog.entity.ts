@@ -1,6 +1,5 @@
 import {
   Column,
-  CreateDateColumn,
   Entity,
   ManyToOne,
   PrimaryGeneratedColumn,
@@ -22,6 +21,6 @@ export class CallLog {
   @Column()
   startAt: Date;
 
-  @Column({ default: 0 })
+  @Column({ default: null, nullable: true })
   endedAt?: Date;
 }
