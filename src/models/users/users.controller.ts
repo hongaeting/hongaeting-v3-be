@@ -21,15 +21,21 @@ export class UsersController {
   @Post()
   async create(@Body() createUserDto: CreateUserDto) {
     await this.usersService.create(createUserDto);
+
+    return true;
   }
 
   @Patch(':id')
   async modify(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     await this.usersService.update(id, updateUserDto);
+
+    return true;
   }
 
   @Delete(':id')
   async remove(@Param('id') id: string) {
     await this.usersService.delete(id);
+
+    return true;
   }
 }

@@ -33,4 +33,7 @@ export class User {
     onDelete: 'NO ACTION',
   })
   receivedCallLog: CallLog[];
+
+  @Column({ default: null, nullable: true })
+  deletedAt: Date;
 }

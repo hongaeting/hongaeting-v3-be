@@ -47,7 +47,7 @@ export class UsersService {
   }
 
   async delete(id: string) {
-    const deleteUserResult = await this.usersRepository.delete(id);
+    const deleteUserResult = await this.usersRepository.update(id, { deletedAt: new Date().toISOString() });
 
     if (deleteUserResult.affected === 0) throw new InternalException(MSG_NO_USER);
   }
