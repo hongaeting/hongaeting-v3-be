@@ -1,3 +1,3 @@
 export class UpdateCallLogDto {
-  duration: number;
+  endedAt: Date;
 }
