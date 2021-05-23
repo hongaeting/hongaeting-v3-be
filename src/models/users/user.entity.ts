@@ -24,15 +24,11 @@ export class User {
   @Column({ default: false })
   isVerified: boolean;
 
-  @OneToMany(() => CallLog, (callLog) => callLog.caller, {
-    onDelete: 'NO ACTION',
-  })
-  madeCallLog: CallLog[];
+  @OneToMany(() => CallLog, (callLog) => callLog.caller)
+  madeCallLogs: CallLog[];
 
-  @OneToMany(() => CallLog, (callLog) => callLog.callee, {
-    onDelete: 'NO ACTION',
-  })
-  receivedCallLog: CallLog[];
+  @OneToMany(() => CallLog, (callLog) => callLog.callee)
+  receivedCallLogs: CallLog[];
 
   @Column({ default: null, nullable: true })
   deletedAt: Date;
