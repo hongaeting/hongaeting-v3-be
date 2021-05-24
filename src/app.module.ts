@@ -9,6 +9,8 @@ import { AppService } from './app.service';
 import { MessageModule } from './message-events/message.module';
 import { CallLogsModule } from './models/callLogs/callLogs.module';
 import { UsersModule } from './models/users/users.module';
+import { ChatsModule } from './chats/chats.module';
+
 
 @Module({
   imports: [
@@ -33,6 +35,7 @@ import { UsersModule } from './models/users/users.module';
     MessageModule,
     UsersModule,
     CallLogsModule,
+    ChatsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
