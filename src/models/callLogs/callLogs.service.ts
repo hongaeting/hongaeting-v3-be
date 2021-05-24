@@ -14,10 +14,11 @@ export class CallLogsService {
   constructor(
     @InjectRepository(CallLog)
     private callLogsRepository: Repository<CallLog>,
-  ) { }
+  ) {}
 
   async create(callLogData: ICreateCallLog) {
-    await this.callLogsRepository.createQueryBuilder()
+    await this.callLogsRepository
+      .createQueryBuilder()
       .insert()
       .into(CallLog)
       .values([{ ...callLogData }])
@@ -41,14 +42,19 @@ export class CallLogsService {
   }
 
   async update(id: string, callLogData: IUpcateCallLog) {
-    const updateCallLogResult = await this.callLogsRepository.update(id, callLogData);
+    const updateCallLogResult = await this.callLogsRepository.update(
+      id,
+      callLogData,
+    );
 
-    if (updateCallLogResult.affected === 0) throw new InternalException(MSG_NO_CALL_LOG);
+    if (updateCallLogResult.affected === 0)
+      throw new InternalException(MSG_NO_CALL_LOG);
   }
 
   async delete(id: string) {
     const deleteCallLogResult = await this.callLogsRepository.delete(id);
 
-    if (deleteCallLogResult.affected === 0) throw new InternalException(MSG_NO_CALL_LOG);
+    if (deleteCallLogResult.affected === 0)
+      throw new InternalException(MSG_NO_CALL_LOG);
   }
 }
