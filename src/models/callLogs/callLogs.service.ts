@@ -4,10 +4,7 @@ import { Repository } from 'typeorm';
 
 import { CallLog } from './callLog.entity';
 import { ICreateCallLog } from './interface/create-callLog.interface';
-import { InternalException } from 'src/util/exception/internal.exception';
 import { IUpcateCallLog } from './interface/update-callLog.interface';
-
-const MSG_NO_CALL_LOG = 'There is no callLogs.';
 
 @Injectable()
 export class CallLogsService {
@@ -26,35 +23,18 @@ export class CallLogsService {
   }
 
   async findAll() {
-    const callLogs = await this.callLogsRepository.find();
-
-    if (callLogs.length === 0) throw new InternalException(MSG_NO_CALL_LOG);
-
-    return callLogs;
+    return await this.callLogsRepository.find();
   }
 
   async findOne(id: string) {
-    const callLog = await this.callLogsRepository.findOne(id);
-
-    if (!callLog) throw new InternalException(MSG_NO_CALL_LOG);
-
-    return callLog;
+    return await this.callLogsRepository.findOne(id);
   }
 
   async update(id: string, callLogData: IUpcateCallLog) {
-    const updateCallLogResult = await this.callLogsRepository.update(
-      id,
-      callLogData,
-    );
-
-    if (updateCallLogResult.affected === 0)
-      throw new InternalException(MSG_NO_CALL_LOG);
+    return await this.callLogsRepository.update(id, callLogData);
   }
 
   async delete(id: string) {
-    const deleteCallLogResult = await this.callLogsRepository.delete(id);
-
-    if (deleteCallLogResult.affected === 0)
-      throw new InternalException(MSG_NO_CALL_LOG);
+    return await this.callLogsRepository.delete(id);
   }
 }

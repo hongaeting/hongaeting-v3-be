@@ -6,13 +6,16 @@ import {
   Delete,
   Body,
   Param,
+  UseInterceptors,
 } from '@nestjs/common';
 
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { NotFoundInterceptor } from 'src/interceptors/notFound.interceptor';
 
 @Controller('users')
+@UseInterceptors(NotFoundInterceptor)
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
@@ -29,21 +32,16 @@ export class UsersController {
   @Post()
   async create(@Body() createUserDto: CreateUserDto) {
     await this.usersService.create(createUserDto);
-
     return true;
   }
 
   @Patch(':id')
   async modify(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    await this.usersService.update(id, updateUserDto);
-
-    return true;
+    return await this.usersService.update(id, updateUserDto);
   }
 
   @Delete(':id')
   async remove(@Param('id') id: string) {
-    await this.usersService.delete(id);
-
-    return true;
+    return await this.usersService.delete(id);
   }
 }

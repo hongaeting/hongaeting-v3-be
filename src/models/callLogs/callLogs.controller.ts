@@ -1,14 +1,23 @@
 import {
-  Controller, Get, Param, Post, Body, Patch, Delete,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Body,
+  Patch,
+  Delete,
+  UseInterceptors,
 } from '@nestjs/common';
 
 import { CallLogsService } from './callLogs.service';
 import { CreateCallLogDto } from './dto/create-callLog.dto';
 import { UpdateCallLogDto } from './dto/update-callLog.dto';
+import { NotFoundInterceptor } from 'src/interceptors/notFound.interceptor';
 
 @Controller('callLogs')
+@UseInterceptors(NotFoundInterceptor)
 export class CallLogsController {
-  constructor(private readonly callLogsService: CallLogsService) { }
+  constructor(private readonly callLogsService: CallLogsService) {}
 
   @Get(':id')
   async find(@Param('id') id: string) {
@@ -28,16 +37,15 @@ export class CallLogsController {
   }
 
   @Patch(':id')
-  async modify(@Param('id') id: string, @Body() updateCallLogDto: UpdateCallLogDto) {
-    await this.callLogsService.update(id, updateCallLogDto);
-
-    return true;
+  async modify(
+    @Param('id') id: string,
+    @Body() updateCallLogDto: UpdateCallLogDto,
+  ) {
+    return await this.callLogsService.update(id, updateCallLogDto);
   }
 
   @Delete(':id')
   async remove(@Param('id') id: string) {
-    await this.callLogsService.delete(id);
-
-    return true;
+    return await this.callLogsService.delete(id);
   }
 }
