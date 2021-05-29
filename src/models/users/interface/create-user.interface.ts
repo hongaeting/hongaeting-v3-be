@@ -1,4 +1,4 @@
-import { GenderType } from "../user.entity";
+import { GenderType } from '../user.entity';
 
 export interface ICreateUser {
   email: string;

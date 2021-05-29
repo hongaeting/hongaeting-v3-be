@@ -10,4 +10,4 @@ import { CallLogsController } from './callLogs.controller';
   providers: [CallLogsService],
   controllers: [CallLogsController],
 })
-export class CallLogsModule { }
+export class CallLogsModule {}
