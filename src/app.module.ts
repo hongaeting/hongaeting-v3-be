@@ -6,7 +6,11 @@ import { join } from 'path';
 import configuration from './config/configuration';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { MessageModule } from './message-events/message.module';
+import { CallLogsModule } from './models/callLogs/callLogs.module';
+import { UsersModule } from './models/users/users.module';
 import { ChatsModule } from './chats/chats.module';
+
 
 @Module({
   imports: [
@@ -28,6 +32,9 @@ import { ChatsModule } from './chats/chats.module';
         synchronize: true,
       }),
     }),
+    MessageModule,
+    UsersModule,
+    CallLogsModule,
     ChatsModule,
   ],
   controllers: [AppController],
