@@ -5,12 +5,11 @@ volumes:
   redis_data: {}
 
 services:
-
   db:
     image: mysql
     command: --default-authentication-plugin=mysql_native_password
     restart: always
-    volumes: 
+    volumes:
       - db_data:/var/lib/mysql
     ports:
       - ${DB_PORT}:3306
@@ -19,7 +18,7 @@ services:
       - MYSQL_USER=${DB_USERNAME}
       - MYSQL_PASSWORD=${DB_PASSWORD}
       - MYSQL_DATABASE=${DB_DATABASE}
-  
+
   adminer:
     image: adminer
     restart: always
