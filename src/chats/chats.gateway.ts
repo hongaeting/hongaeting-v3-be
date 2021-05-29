@@ -19,6 +19,7 @@ export class ChatsGateway
 
   private logger: Logger = new Logger('ChatGateway');
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public afterInit(server: Server): void {
     return this.logger.log('Init');
   }

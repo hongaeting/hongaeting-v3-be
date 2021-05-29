@@ -14,7 +14,7 @@ import { CreateCallLogDto } from './dto/create-callLog.dto';
 import { UpdateCallLogDto } from './dto/update-callLog.dto';
 import { NotFoundInterceptor } from 'src/interceptors/notFound.interceptor';
 
-@Controller('callLogs')
+@Controller('call-logs')
 @UseInterceptors(NotFoundInterceptor)
 export class CallLogsController {
   constructor(private readonly callLogsService: CallLogsService) {}
