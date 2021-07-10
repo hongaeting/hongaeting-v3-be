@@ -9,7 +9,7 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'plugin:prettier/recommended',
     // 'prettier/@typescript-eslint',
-    'prettier'
+    'prettier',
   ],
   root: true,
   env: {
@@ -26,7 +26,7 @@ module.exports = {
       'error',
       {
         endOfLine: 'auto',
-      }
-    ]
+      },
+    ],
   },
 };

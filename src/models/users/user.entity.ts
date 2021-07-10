@@ -2,6 +2,7 @@ import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
 import { CallLog } from '../callLogs/callLog.entity';
 
+// TODO: Enum 객체를 객체로 변경
 export enum GenderType {
   MALE = 'MALE',
   FEMALE = 'FEMALE',

@@ -9,6 +9,7 @@ import { AppService } from './app.service';
 import { CallLogsModule } from './models/callLogs/callLogs.module';
 import { UsersModule } from './models/users/users.module';
 import { ChatsModule } from './chats/chats.module';
+import { VideoChatsModule } from './videoChats/videoChats.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { ChatsModule } from './chats/chats.module';
     UsersModule,
     CallLogsModule,
     ChatsModule,
+    VideoChatsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
