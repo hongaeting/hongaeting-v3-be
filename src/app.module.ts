@@ -9,6 +9,7 @@ import { CallLogsModule } from './models/callLogs/callLogs.module';
 import { UsersModule } from './models/users/users.module';
 import { ChatsModule } from './models/chats/chats.module';
 import { GendersModule } from './models/genders/genders.module';
+import { DepartmentsModule } from './models/departments/departments.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { GendersModule } from './models/genders/genders.module';
     UsersModule,
     CallLogsModule,
     GendersModule,
+    DepartmentsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
