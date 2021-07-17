@@ -142,3 +142,8 @@ temp/
 *.code-workspace
 
 # End of https://www.toptal.com/developers/gitignore/api/vscode,node,dotenv
+
+mysql
+redis
+
+.idea
