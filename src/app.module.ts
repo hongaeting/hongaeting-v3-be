@@ -3,7 +3,6 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
 
-import configuration from './config/configuration';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CallLogsModule } from './models/callLogs/callLogs.module';
@@ -13,7 +12,7 @@ import { ChatsModule } from './chats/chats.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      load: [configuration],
+      isGlobal: true,
       envFilePath: ['.env.development', '.env.production', '.env'],
     }),
     TypeOrmModule.forRootAsync({
@@ -21,11 +20,11 @@ import { ChatsModule } from './chats/chats.module';
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
         type: 'mysql',
-        host: configService.get('db.host'),
-        port: +configService.get('db.port'),
-        username: configService.get('db.username'),
-        password: configService.get('db.password'),
-        database: configService.get('db.database'),
+        host: configService.get('DB_HOST'),
+        port: +configService.get('DB_PORT'),
+        username: configService.get('DB_USERNAME'),
+        password: configService.get('DB_PASSWORD'),
+        database: configService.get('DB_DATABASE'),
         entities: [join(__dirname, '/**/*.entity.js')],
         synchronize: true,
       }),
