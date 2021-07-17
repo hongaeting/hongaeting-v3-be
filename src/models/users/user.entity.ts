@@ -1,35 +1,31 @@
-import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Column, Entity, ManyToOne, JoinColumn } from 'typeorm';
 
-import { CallLog } from '../callLogs/callLog.entity';
-
-export enum GenderType {
-  MALE = 'MALE',
-  FEMALE = 'FEMALE',
-}
+import { Common } from '../commons/common.entity';
+import { Gender } from '../genders/gender.entity';
+import { Department } from '../departments/department.entity';
 
 @Entity()
-export class User {
-  @PrimaryGeneratedColumn()
-  id: number;
-
-  @Column()
+export class User extends Common {
+  @Column({ unique: true, nullable: false })
   email: string;
 
-  @Column()
-  password: string;
+  @Column({ unique: true, nullable: false })
+  nickname: string;
 
-  @Column('enum', { enum: GenderType })
-  gender: GenderType;
+  @Column({ nullable: false })
+  dateOfBirth: Date;
 
-  @Column({ default: false })
-  isVerified: boolean;
+  @ManyToOne(() => Gender, (gender) => gender)
+  @JoinColumn({ name: 'genderId' })
+  gender: Gender;
 
-  @OneToMany(() => CallLog, (callLog) => callLog.caller)
-  madeCallLogs: CallLog[];
+  @Column({ nullable: false })
+  genderId: number;
 
-  @OneToMany(() => CallLog, (callLog) => callLog.callee)
-  receivedCallLogs: CallLog[];
+  @ManyToOne(() => Department, (department) => department)
+  @JoinColumn({ name: 'departmentId' })
+  department: Department;
 
-  @Column({ default: null, nullable: true })
-  deletedAt: Date;
+  @Column({ nullable: false })
+  departmentId: number;
 }
