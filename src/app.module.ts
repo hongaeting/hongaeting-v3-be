@@ -7,11 +7,12 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CallLogsModule } from './models/callLogs/callLogs.module';
 import { UsersModule } from './models/users/users.module';
-import { ChatsModule } from './models/chats/chats.module';
 import { GendersModule } from './models/genders/genders.module';
 import { DepartmentsModule } from './models/departments/departments.module';
 import { SignsModule } from './models/signs/signs.module';
 import { JwtMiddleware } from './libs/jwt.middleware';
+import { ChatsModule } from './models/chats/chats.module';
+import { VideoChatsModule } from './videoChats/videoChats.module';
 
 @Module({
   imports: [
@@ -33,12 +34,13 @@ import { JwtMiddleware } from './libs/jwt.middleware';
         synchronize: true,
       }),
     }),
-    ChatsModule,
     UsersModule,
     CallLogsModule,
     GendersModule,
     DepartmentsModule,
     SignsModule,
+    ChatsModule,
+    VideoChatsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
