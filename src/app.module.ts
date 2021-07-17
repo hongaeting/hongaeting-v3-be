@@ -7,7 +7,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CallLogsModule } from './models/callLogs/callLogs.module';
 import { UsersModule } from './models/users/users.module';
-import { ChatsModule } from './chats/chats.module';
+import { ChatsModule } from './models/chats/chats.module';
 
 @Module({
   imports: [
@@ -29,6 +29,7 @@ import { ChatsModule } from './chats/chats.module';
         synchronize: true,
       }),
     }),
+    ChatsModule,
     UsersModule,
     CallLogsModule,
     ChatsModule,
