@@ -9,7 +9,7 @@ async function bootstrap() {
 
   app.useWebSocketAdapter(new RedisIoAdapter(app, configService));
 
-  await app.listen(configService.get('api.port') ?? 3000);
+  await app.listen(configService.get('API_PORT') ?? 3000);
 }
 
 bootstrap();
