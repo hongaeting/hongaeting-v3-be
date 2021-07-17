@@ -9,6 +9,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
 
+  app.setGlobalPrefix(`api/${configService.get('API_VERSION')}`);
   app.useWebSocketAdapter(new RedisIoAdapter(app, configService));
   app.use(cookieParser());
 
