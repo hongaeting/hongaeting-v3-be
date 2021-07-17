@@ -1,5 +1,7 @@
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
+import * as cookieParser from 'cookie-parser';
+
 import { RedisIoAdapter } from './adapters/redis.adapter';
 import { AppModule } from './app.module';
 
@@ -7,9 +9,11 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
 
+  app.setGlobalPrefix(`api/${configService.get('API_VERSION')}`);
   app.useWebSocketAdapter(new RedisIoAdapter(app, configService));
+  app.use(cookieParser());
 
-  await app.listen(configService.get('api.port') ?? 3000);
+  await app.listen(configService.get('API_PORT') ?? 3000);
 }
 
 bootstrap();

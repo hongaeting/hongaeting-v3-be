@@ -1,4 +1,10 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 import { User } from '../users/user.entity';
 
@@ -7,15 +13,20 @@ export class CallLog {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => User, (user) => user.id)
+  @ManyToOne(() => User, { nullable: false })
+  @JoinColumn({ name: 'callerId' })
   caller: User;
 
-  @ManyToOne(() => User, (user) => user.id)
+  @ManyToOne(() => User, { nullable: false })
+  @JoinColumn({ name: 'calleeId' })
   callee: User;
 
-  @Column()
+  @Column({ nullable: false })
   startedAt: Date;
 
-  @Column({ default: null, nullable: true })
+  @Column({ nullable: true, default: null })
   endedAt: Date;
+
+  @Column({ nullable: true, default: null })
+  deletedAt: Date;
 }

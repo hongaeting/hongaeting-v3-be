@@ -10,7 +10,7 @@ services:
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     volumes:
-      - db_data:/var/lib/mysql
+      - ./mysql:/var/lib/mysql
     ports:
       - ${DB_PORT}:3306
     environment:
@@ -28,6 +28,6 @@ services:
   redis:
     image: redis
     volumes:
-      - redis_data:/var/lib/redis
+      - ./redis:/var/lib/redis
     ports:
       - ${REDIS_PORT}:6379

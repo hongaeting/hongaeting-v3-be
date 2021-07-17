@@ -1,15 +1,18 @@
-import { Column, Entity, ManyToOne, JoinColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 
 import { Common } from '../commons/common.entity';
-import { Gender } from '../genders/gender.entity';
 import { Department } from '../departments/department.entity';
+import { Gender } from '../genders/gender.entity';
 
 @Entity()
-export class User extends Common {
+export class SignUp extends Common {
   @Column({ unique: true, nullable: false })
+  authToken: string;
+
+  @Column({ nullable: false })
   email: string;
 
-  @Column({ unique: true, nullable: false })
+  @Column({ nullable: false })
   nickname: string;
 
   @Column({ nullable: false })
