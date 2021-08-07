@@ -1,5 +1,6 @@
-import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
+import { Logger } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import * as cookieParser from 'cookie-parser';
 import * as fs from 'fs';
 import * as path from 'path';
@@ -11,21 +12,32 @@ import { AppModule } from './app.module';
 dotenv.config();
 
 async function bootstrap() {
-  const httpsOptions = {
-    key: fs.readFileSync(
-      path.join(__dirname, '..', ...(process.env?.SSL_KEY ?? '').split('/')),
-      'utf8',
-    ),
-    cert: fs.readFileSync(
-      path.join(__dirname, '..', ...(process.env?.SSL_CERT ?? '').split('/')),
-      'utf8',
-    ),
-  };
-  const app = await NestFactory.create(AppModule, {
-    httpsOptions: process.env.NODE_ENV === 'development' ? {} : httpsOptions,
-  });
-  const configService = app.get(ConfigService);
+  const logger = new Logger('bootstrap');
 
+  const { NODE_ENV, SSL_KEY, SSL_CERT, SSL_CHAIN } = process.env;
+  const app = await NestFactory.create(
+    AppModule,
+    NODE_ENV === 'production'
+      ? {
+          httpsOptions: {
+            key: fs.readFileSync(
+              path.join(__dirname, '..', 'secrets', SSL_KEY),
+              'utf8',
+            ),
+            cert: fs.readFileSync(
+              path.join(__dirname, '..', 'secrets', SSL_CERT),
+              'utf8',
+            ),
+            ca: fs.readFileSync(
+              path.join(__dirname, '..', 'secrets', SSL_CHAIN),
+              'utf8',
+            ),
+          },
+        }
+      : undefined,
+  );
+
+  const configService = app.get(ConfigService);
   app.setGlobalPrefix(`api/${configService.get('API_VERSION')}`);
   app.useWebSocketAdapter(new RedisIoAdapter(app, configService));
   app.use(cookieParser());
