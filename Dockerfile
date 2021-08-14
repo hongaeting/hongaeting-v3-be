@@ -8,6 +8,7 @@ ARG SSL_CHAIN
 
 RUN npm install -g npm@7.20.5
 RUN npm install -g pm2
+RUN npm i -g @nestjs/cli
 COPY package*.json /
 RUN npm install --save-dev
 
