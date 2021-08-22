@@ -46,12 +46,6 @@ services:
     container_name: backend
     build:
       context: .
-      args:
-        - SSL_DIR=${SSL_DIR}
-        - SSL_KEY=${SSL_KEY}
-        - SSL_CERT=${SSL_CERT}
-        - SSL_CHAIN=${SSL_CHAIN}
-        - NODE_ENV=${NODE_ENV}
     ports:
       - 4000:${API_PORT}
     links:
