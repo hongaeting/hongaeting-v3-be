@@ -5,7 +5,7 @@ import { Socket } from 'socket.io';
 import { nanoid } from 'nanoid';
 
 import { Queue } from './queue.entity';
-import { DeleteQueueDto, ProcessQueueDto } from './queues.dto';
+import { CancelMatchingDto, RequestMatchingDto } from './queues.dto';
 import { User } from '../users/user.entity';
 import { UsersService } from '../users/users.service';
 
@@ -20,7 +20,7 @@ export class QueuesService {
     private readonly queuesRepository: Repository<Queue>,
   ) {}
 
-  public async getUserBySocket(client: Socket) {
+  public async getUserFromSocket(client: Socket) {
     const cookies =
       client?.client?.request?.headers?.cookie
         ?.split(';')
@@ -33,11 +33,11 @@ export class QueuesService {
     return this.usersService.getUserByAccessToken(cookies['AccessToken'] ?? '');
   }
 
-  public async requestMatching(user: User): Promise<ProcessQueueDto> {
+  public async requestMatching(user: User): Promise<RequestMatchingDto> {
     const queryRunner = this.connection.createQueryRunner();
     await queryRunner.connect();
     await queryRunner.startTransaction();
-    let result: ProcessQueueDto;
+    let result: RequestMatchingDto;
 
     try {
       result = await QueuesService.addOrUpdateQueue(queryRunner, user);
@@ -55,7 +55,7 @@ export class QueuesService {
   private static async addOrUpdateQueue(
     queryRunner: QueryRunner,
     user: User,
-  ): Promise<ProcessQueueDto> {
+  ): Promise<RequestMatchingDto> {
     const requestUserIdColumn =
       user.gender.id === 1 ? 'maleUserId' : 'maleUserId';
 
@@ -79,11 +79,11 @@ export class QueuesService {
     };
   }
 
-  public async cancelMatching(user: User): Promise<DeleteQueueDto> {
+  public async cancelMatching(user: User): Promise<CancelMatchingDto> {
     const queryRunner = this.connection.createQueryRunner();
     await queryRunner.connect();
     await queryRunner.startTransaction();
-    let result: DeleteQueueDto = { result: 'FAIL' };
+    let result: CancelMatchingDto = { result: 'FAIL' };
 
     try {
       const { requestUserIdColumn, waitingUserIdColumn } =
