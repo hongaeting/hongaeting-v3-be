@@ -134,8 +134,8 @@ export class SignsController {
   }
 
   private async validateAuthTokenExpired(createdAt: Date): Promise<void> {
-    const standartTime = 1000 * 60 * 60 * 24;
-    if (!createdAt || Date.now() - createdAt.getTime() > standartTime) {
+    const standardTime = 1000 * 60 * 60 * 24;
+    if (!createdAt || Date.now() - createdAt.getTime() > standardTime) {
       throw new HttpException(
         '유효 기간이 만료 되었습니다.',
         HttpStatus.BAD_REQUEST,

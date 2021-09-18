@@ -1,6 +1,6 @@
 import {
-  Column,
   CreateDateColumn,
+  DeleteDateColumn,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -15,6 +15,6 @@ export abstract class Common {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @Column({ nullable: true })
+  @DeleteDateColumn({ nullable: true })
   deletedAt?: Date;
 }

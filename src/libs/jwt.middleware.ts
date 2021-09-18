@@ -20,8 +20,8 @@ export class JwtMiddleware implements NestMiddleware {
         jwtSecret,
       ) as jwt.JwtPayload;
       const now = Math.floor(Date.now() / 1000);
-      const sandardDay = 2;
-      if (exp - now >= 60 * 60 * 24 * sandardDay) return next();
+      const standardDay = 2;
+      if (exp - now >= 60 * 60 * 24 * standardDay) return next();
 
       const refreshedAccessToken = jwt.sign({ id, email }, jwtSecret, {
         expiresIn: '3d',

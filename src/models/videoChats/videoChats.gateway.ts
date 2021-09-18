@@ -11,12 +11,21 @@ import {
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 
+import { UsersService } from '../users/users.service';
+import { QueuesService } from '../queues/queues.service';
+
 @WebSocketGateway({ namespace: 'video-chats', transports: ['websocket'] })
 export class VideoChatsGateway
-  implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
+  implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
+{
   @WebSocketServer() server: Server;
 
-  private logger: Logger = new Logger('VideoChatsGateway');
+  private logger: Logger = new Logger(VideoChatsGateway.name);
+
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly queuesService: QueuesService,
+  ) {}
 
   public afterInit(server: Server): void {
     this.logger.log('Init');

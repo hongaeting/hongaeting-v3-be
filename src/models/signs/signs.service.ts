@@ -10,7 +10,7 @@ import { SignIn } from './signIn.entity';
 
 @Injectable()
 export class SignsService {
-  private readonly logger: Logger = new Logger('SignsController');
+  private readonly logger: Logger = new Logger('SignsService');
   private readonly transport: Transporter;
 
   constructor(

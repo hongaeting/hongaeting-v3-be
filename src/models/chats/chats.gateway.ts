@@ -12,12 +12,21 @@ import {
 import { Logger } from '@nestjs/common';
 import { Socket, Server } from 'socket.io';
 
+import { UsersService } from '../users/users.service';
+import { QueuesService } from '../queues/queues.service';
+
 @WebSocketGateway({ namespace: 'chats', transports: ['websocket'] })
 export class ChatsGateway
-  implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
+  implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
+{
   @WebSocketServer() server: Server;
 
-  private logger: Logger = new Logger('ChatGateway');
+  private logger: Logger = new Logger(ChatsGateway.name);
+
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly queuesService: QueuesService,
+  ) {}
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public afterInit(server: Server): void {
