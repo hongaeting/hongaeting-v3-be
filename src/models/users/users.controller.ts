@@ -48,7 +48,7 @@ export class UsersController {
     @Body() updateUserDto: UpdateUserDto,
   ) {
     const { nickname } = updateUserDto;
-    nickname && this.validateNickname(nickname);
+    nickname && (await this.validateNickname(nickname));
     return this.usersService.updateById(id, updateUserDto);
   }
 

@@ -12,14 +12,21 @@ import { DepartmentsModule } from './models/departments/departments.module';
 import { SignsModule } from './models/signs/signs.module';
 import { JwtMiddleware } from './libs/jwt.middleware';
 import { ChatsModule } from './models/chats/chats.module';
-import { VideoChatsModule } from './videoChats/videoChats.module';
+import { VideoChatsModule } from './models/videoChats/videoChats.module';
+import { QueuesModule } from './models/queues/queues.module';
 
 @Module({
   imports: [
+    // environment variables settings
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: ['.env.development', '.env.production', '.env'],
     }),
+
+    // queueing settings
+    QueuesModule,
+
+    // context settings
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -42,6 +49,8 @@ import { VideoChatsModule } from './videoChats/videoChats.module';
     ChatsModule,
     VideoChatsModule,
   ],
+
+  // app settings
   controllers: [AppController],
   providers: [AppService],
 })
