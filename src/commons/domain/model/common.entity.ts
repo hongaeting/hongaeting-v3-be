@@ -7,14 +7,14 @@ import {
 
 export abstract class Common {
   @PrimaryGeneratedColumn()
-  id: number;
+  protected id: number;
 
   @CreateDateColumn()
-  createdAt: Date;
+  protected createdAt: Date;
 
   @UpdateDateColumn()
-  updatedAt: Date;
+  protected updatedAt: Date;
 
-  @DeleteDateColumn({ nullable: true })
-  deletedAt?: Date;
+  @DeleteDateColumn()
+  protected deletedAt: Date;
 }
