@@ -1,36 +1,37 @@
-import { Injectable, Logger, NestMiddleware } from '@nestjs/common';
+import { Injectable, NestMiddleware } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Request, Response, NextFunction } from 'express';
-import * as jwt from 'jsonwebtoken';
+import { decryptAccessToken, setAccessToken } from '../util/auth';
+import { Loggable } from '../util/loggable';
+import { JwtPayload } from 'jsonwebtoken';
 
 @Injectable()
-export class JwtMiddleware implements NestMiddleware {
-  private readonly logger: Logger = new Logger('JwtRefreshMiddleware');
+export class JwtMiddleware extends Loggable implements NestMiddleware {
+  //
+  private ACCESS_TOKEN_COOKIE = 'AccessToken';
 
-  constructor(private readonly config: ConfigService) {}
+  constructor(private readonly config: ConfigService) {
+    super();
+  }
 
   async use(req: Request, res: Response, next: NextFunction) {
-    const accessToken = req.cookies['AccessToken'];
+    const accessToken = req.cookies[this.ACCESS_TOKEN_COOKIE];
     if (!accessToken) return next();
 
     try {
       const jwtSecret = this.config.get('JWT_SECRET');
-      const { id, email, exp } = jwt.verify(
-        accessToken,
+      const { id, exp } = (await decryptAccessToken(
         jwtSecret,
-      ) as jwt.JwtPayload;
+        req,
+      )) as JwtPayload;
+
       const now = Math.floor(Date.now() / 1000);
       const standardDay = 2;
-      if (exp - now >= 60 * 60 * 24 * standardDay) return next();
+      if (exp - now >= 60 * 60 * 24 * standardDay) {
+        return next();
+      }
 
-      const refreshedAccessToken = jwt.sign({ id, email }, jwtSecret, {
-        expiresIn: '3d',
-      });
-      const refreshDay = 3;
-      res.cookie('AccessToken', refreshedAccessToken, {
-        maxAge: 1000 * 60 * 60 * 24 * refreshDay,
-        httpOnly: true,
-      });
+      await setAccessToken({ id }, jwtSecret, res);
       next();
     } catch {
       next();

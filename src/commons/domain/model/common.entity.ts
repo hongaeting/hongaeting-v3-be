@@ -5,16 +5,33 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-export abstract class Common {
-  @PrimaryGeneratedColumn()
-  protected id: number;
+export abstract class CommonEntity {
+  //
+  @PrimaryGeneratedColumn('uuid')
+  public id: string;
 
   @CreateDateColumn()
-  protected createdAt: Date;
+  public createdAt: Date;
 
   @UpdateDateColumn()
-  protected updatedAt: Date;
+  public updatedAt: Date;
 
   @DeleteDateColumn()
-  protected deletedAt: Date;
+  public deletedAt: Date;
+
+  getId() {
+    return this.id;
+  }
+
+  getCreatedAt() {
+    return this.createdAt.toISOString();
+  }
+
+  getUpdatedAt() {
+    return this.updatedAt.toISOString();
+  }
+
+  getDeletedAt() {
+    return this.deletedAt.toISOString();
+  }
 }

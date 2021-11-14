@@ -1,6 +1,6 @@
 import { Logger } from '@nestjs/common';
 
-export abstract class CommonLogger {
+export abstract class Loggable {
   private readonly logger: Logger = new Logger(this.constructor.name);
 
   protected log(message: string) {

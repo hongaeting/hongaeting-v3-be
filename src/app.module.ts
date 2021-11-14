@@ -5,15 +5,9 @@ import { join } from 'path';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { CallLogsModule } from './models/callLogs/callLogs.module';
-import { UsersModule } from './models/users/users.module';
-import { GendersModule } from './models/genders/genders.module';
-import { DepartmentsModule } from './models/departments/departments.module';
-import { SignsModule } from './models/signs/signs.module';
-import { JwtMiddleware } from './libs/jwt.middleware';
-import { ChatsModule } from './models/chats/chats.module';
-import { VideoChatsModule } from './models/videoChats/videoChats.module';
-import { QueuesModule } from './models/queues/queues.module';
+import { JwtMiddleware } from './commons/middleware/jwt.middleware';
+import { UsersModule } from './users/users.module';
+import { TypeOrmUserRepository } from './users/infra/repository/type-orm-user.repository';
 
 @Module({
   imports: [
@@ -22,9 +16,6 @@ import { QueuesModule } from './models/queues/queues.module';
       isGlobal: true,
       envFilePath: ['.env.development', '.env.production', '.env'],
     }),
-
-    // queueing settings
-    QueuesModule,
 
     // context settings
     TypeOrmModule.forRootAsync({
@@ -42,12 +33,7 @@ import { QueuesModule } from './models/queues/queues.module';
       }),
     }),
     UsersModule,
-    CallLogsModule,
-    GendersModule,
-    DepartmentsModule,
-    SignsModule,
-    ChatsModule,
-    VideoChatsModule,
+    TypeOrmModule.forFeature([TypeOrmUserRepository]),
   ],
 
   // app settings
